@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="UniaoDeposito.jnlp">
+  <information>
+    <title>UniaoDeposito</title>
+    <vendor>jpedr</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="UniaoDeposito.jar" size="47470" download="eager" />
+    <jar href="lib/postgresql-9.4.1209.jar" size="689278" download="eager" />
+  </resources>
+  <application-desc main-class="view.UniaoDeposito"  name="UniaoDeposito" >
+  </application-desc>
+  <update check="always"/>
+</jnlp>

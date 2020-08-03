@@ -1,0 +1,22 @@
+create table produto (
+	id serial primary key ,
+	nome varchar(80),
+	medida integer,
+	valor decimal,
+	estoque integer
+);
+
+drop table produto;
+drop table cliente;
+
+create table cliente (
+	id serial primary key,
+	nome varchar(80),
+	telefone varchar(80),
+	cep varchar(8),
+	endereco varchar(200),
+	complemento varchar(200),
+	bairro varchar(80),
+	numero integer
+);
+
