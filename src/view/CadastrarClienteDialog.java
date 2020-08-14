@@ -6,11 +6,9 @@
 package view;
 
 import controlador.DominioController;
+import controlador.InterfaceController;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -21,10 +19,10 @@ public class CadastrarClienteDialog extends javax.swing.JDialog {
     /**
      * Creates new form CadastrarClienteDialog
      */
-    DominioController dominioController;
-    public CadastrarClienteDialog(java.awt.Frame parent, boolean modal, DominioController dominioController) {
+    InterfaceController controller;
+    public CadastrarClienteDialog(java.awt.Frame parent, boolean modal, InterfaceController interfaceController) {
         super(parent, modal);
-        this.dominioController = dominioController;
+        this.controller = interfaceController;
         initComponents();
     }
     
@@ -219,7 +217,7 @@ public class CadastrarClienteDialog extends javax.swing.JDialog {
 
     private void BtncSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncSalvarActionPerformed
         try {
-            this.dominioController.inserirCliente(
+            this.controller.getGerDominio().inserirCliente(
                     InputNome.getText(),
                     InputTelefone.getText(),
                     InputCEP.getText(),

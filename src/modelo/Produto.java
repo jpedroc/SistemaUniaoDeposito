@@ -5,16 +5,30 @@
  */
 package modelo;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author jpedroc
  */
-public class Produto {
+
+@Entity(name = "produto")
+public class Produto implements Serializable{
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String nome;
+    
     private Integer medida;
+    
     private Double valor;
+    
     private Integer estoque;
 
     public Produto() {
@@ -26,6 +40,10 @@ public class Produto {
         this.medida = medida;
         this.valor = valor;
         this.estoque = estoque;
+    }
+    
+    public String toString(){
+        return nome.toString() + " " + medida.toString() + " L/Kg";
     }
 
     public Long getId() {

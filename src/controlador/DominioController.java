@@ -6,12 +6,19 @@
 package controlador;
 
 import dao.ClienteDAO;
-import dao.ConexaoBanco;
+import dao.ConexaoHibernate;
+import dao.GenericDAO;
 import dao.ProdutoDAO;
+import dao.VendaDAO;
 import modelo.Produto;
 import modelo.Cliente;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import modelo.Venda;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -21,11 +28,19 @@ public class DominioController {
     
     private final ProdutoDAO produtoDAO;
     private final ClienteDAO clienteDAO;
+    private final VendaDAO vendaDAO;
+    private final GenericDAO genericDAO;
 
     public DominioController() throws ClassNotFoundException, SQLException {
-        ConexaoBanco.obterConexao();
+        ConexaoHibernate.getSessionFactory();
         this.produtoDAO = new ProdutoDAO();
         this.clienteDAO = new ClienteDAO();
+        this.genericDAO = new GenericDAO();
+        this.vendaDAO = new VendaDAO();
+    }
+    
+    public List listar( Class classe) throws HibernateException {
+        return genericDAO.listar( classe );
     }
     
     
@@ -39,8 +54,13 @@ public class DominioController {
         produtoDAO.inserir(produto);
     }
     
-    public List<Produto> listarProdutos() throws ClassNotFoundException, SQLException {
-        return produtoDAO.listar();
+    public void inserirVenda(Cliente cliente, List listaProdutos){
+        Venda venda = new Venda();
+        venda.setCliente(cliente);
+        venda.setListaProdutos(listaProdutos);
+        venda.setDataVenda(new Date());
+        
+        vendaDAO.inserir(venda);
     }
     
     public void inserirCliente(String nome, String telefone, String CEP, String endereco, String bairro, String complemento, Integer numero) throws ClassNotFoundException, SQLException{
@@ -54,11 +74,6 @@ public class DominioController {
         cliente.setNumero(numero);
         
         clienteDAO.inserir(cliente);
-    }
-    
-    public List<Cliente> listarClientes() throws ClassNotFoundException, SQLException{
-        return clienteDAO.listar();
-    }
-    
+    }   
     
 }

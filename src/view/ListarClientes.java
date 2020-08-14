@@ -6,6 +6,7 @@
 package view;
 
 import controlador.DominioController;
+import controlador.InterfaceController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,13 @@ import modelo.Cliente;
  * @author jpedroc
  */
 public class ListarClientes extends javax.swing.JDialog {
-    DominioController dominioController;
+    InterfaceController controller;
     /**
      * Creates new form ListarClientes
      */
-    public ListarClientes(java.awt.Frame parent, boolean modal, DominioController dominioController) {
+    public ListarClientes(java.awt.Frame parent, boolean modal, InterfaceController interfaceController) {
         super(parent, modal);
-        this.dominioController = dominioController;
+        this.controller = interfaceController;
         initComponents();
         this.preencherClientes(TableClientes);
     }
@@ -36,11 +37,7 @@ public class ListarClientes extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         List<Cliente> listaClientes = new ArrayList<>();
         
-        try {
-            listaClientes = dominioController.listarClientes();
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao tentar listar Clientes \n" + ex);
-        }
+        listaClientes = this.controller.getGerDominio().listar(Cliente.class);
         
         for(Cliente cliente : listaClientes) {
             modelo.addRow(new Object[]{

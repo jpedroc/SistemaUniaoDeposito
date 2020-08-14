@@ -6,6 +6,7 @@
 package view;
 
 import controlador.DominioController;
+import controlador.InterfaceController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +22,14 @@ import modelo.Produto;
  * @author jpedroc
  */
 public class ListarProdutos extends javax.swing.JDialog {
-    DominioController dominioController;
+    InterfaceController controller;
     
     /**
      * Creates new form ListarProdutos
      */
-    public ListarProdutos(java.awt.Frame parent, boolean modal, DominioController dominioController) {
+    public ListarProdutos(java.awt.Frame parent, boolean modal, InterfaceController interfaceController) {
         super(parent, modal);
-        this.dominioController = dominioController;
+        this.controller = interfaceController;
         initComponents();
         this.preencherProdutos(TableProdutos);
     }
@@ -37,11 +38,7 @@ public class ListarProdutos extends javax.swing.JDialog {
         DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         List<Produto> listaProdutos = new ArrayList<>();
         
-        try {
-            listaProdutos = dominioController.listarProdutos();
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao tentar listar Produtos \n" + ex);
-        }
+        listaProdutos = controller.getGerDominio().listar(Produto.class);
         
         for(Produto produto : listaProdutos){
             modelo.addRow(new Object[]{produto.getNome(), produto.getMedida(), produto.getValor(), produto.getEstoque()});

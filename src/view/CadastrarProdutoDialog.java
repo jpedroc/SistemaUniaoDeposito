@@ -6,12 +6,9 @@
 package view;
 
 import controlador.DominioController;
+import controlador.InterfaceController;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import modelo.Produto;
 
 /**
  *
@@ -23,10 +20,10 @@ public class CadastrarProdutoDialog extends javax.swing.JDialog {
      * Creates new form CadastrarDialog
      */
     
-    DominioController dominioController;
-    public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal, DominioController dominioController) {
+    InterfaceController controller;
+    public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal, InterfaceController interfaceController) {
         super(parent, modal);
-        this.dominioController = dominioController;
+        this.controller = interfaceController;
         initComponents();
     }
 
@@ -191,7 +188,7 @@ public class CadastrarProdutoDialog extends javax.swing.JDialog {
 
     private void BtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalvarActionPerformed
         try {
-            this.dominioController.inserirProduto(
+            this.controller.getGerDominio().inserirProduto(
                     InputProduto.getText(),
                     Integer.valueOf(InputPesoLitros.getText()),
                     Double.valueOf(InputValor.getText()),

@@ -5,22 +5,45 @@
  */
 package modelo;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author jpedroc
  */
-public class Cliente {
+
+@Entity(name = "cliente")
+public class Cliente implements Serializable{
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String nome;
+    
     private String telefone;
+    
+    @Column(name="cep")
     private String CEP;
+    
     private String endereco;
+    
     private String complemento;
+    
     private String bairro;    
+    
     private Integer numero;
 
     public Cliente() {
+    }
+    
+    public String toString(){
+        return nome.toString();
     }
 
     public Cliente(Long id, String nome, String telefone, String CEP, String endereco, String complemento, String bairro, Integer numero) {

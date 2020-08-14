@@ -5,13 +5,10 @@
  */
 package view;
 
-import controlador.DominioController;
+import controlador.InterfaceController;
 import java.awt.Component;
-import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -26,16 +23,10 @@ public class UniaoDeposito extends javax.swing.JFrame {
      * Creates new form UniaoDeposito
      */
     
-    DominioController dominioController;
+    private InterfaceController interfaceController;
     
-    public UniaoDeposito() {
-        initComponents();
-        try {
-            dominioController = new DominioController();
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            System.exit(-1);
-        }
+    public UniaoDeposito(InterfaceController interfaceController) {
+        this.interfaceController = interfaceController;
         initComponents();
     }
 
@@ -130,28 +121,23 @@ public class UniaoDeposito extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarProdutoActionPerformed
-        JDialog cadastrarDialog = new CadastrarProdutoDialog(this, rootPaneCheckingEnabled, dominioController);
-        cadastrarDialog.setVisible(true);
+        interfaceController.janCadProduto();
     }//GEN-LAST:event_CadastrarProdutoActionPerformed
 
     private void CadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarClienteActionPerformed
-        JDialog cadastrarClienteDialog = new CadastrarClienteDialog(this, rootPaneCheckingEnabled, dominioController);
-        cadastrarClienteDialog.setVisible(true);
+        interfaceController.janCadCliente();
     }//GEN-LAST:event_CadastrarClienteActionPerformed
 
     private void RealizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RealizarVendaActionPerformed
-        JDialog realizarVenda = new RealizarVendaDialog(this, rootPaneCheckingEnabled);
-        realizarVenda.setVisible(true);
+        interfaceController.janRealizarVenda();
     }//GEN-LAST:event_RealizarVendaActionPerformed
 
     private void ListarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarProdutoActionPerformed
-         JDialog listarProdutos = new ListarProdutos(this, rootPaneCheckingEnabled, dominioController);
-         listarProdutos.setVisible(true);
+         interfaceController.janListarProduto();
     }//GEN-LAST:event_ListarProdutoActionPerformed
 
     private void ListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarClienteActionPerformed
-        JDialog listarClientes = new ListarClientes(this, rootPaneCheckingEnabled, dominioController);
-        listarClientes.setVisible(true);
+        interfaceController.janListarCliente();
     }//GEN-LAST:event_ListarClienteActionPerformed
 
     public void resizeColumnWidth(JTable table) {
@@ -169,45 +155,6 @@ public class UniaoDeposito extends javax.swing.JFrame {
         }
     }  
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-                
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UniaoDeposito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UniaoDeposito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UniaoDeposito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UniaoDeposito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        JFrame listagemFrame = new UniaoDeposito();
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                listagemFrame.setVisible(true);
-                listagemFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CadastrarCliente;
     private javax.swing.JMenuItem CadastrarProduto;
