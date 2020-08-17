@@ -13,8 +13,6 @@ import dao.VendaDAO;
 import modelo.Produto;
 import modelo.Cliente;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import modelo.Venda;
@@ -54,13 +52,37 @@ public class DominioController {
         produtoDAO.inserir(produto);
     }
     
+    private List<Produto> abaterLista(List<Produto> listaProdutos){
+        listaProdutos.forEach(element -> {
+            element.setEstoque(element.getEstoque() - 1);
+        });
+        
+        return listaProdutos;
+    }
+   
+    private void updateListaProdutos(List<Produto> listaProdutos){
+        listaProdutos.forEach(element -> {
+            produtoDAO.alterar(element);
+        });
+    }
+    
+    public void alterarEstoqueProduto(Long id, Integer novoEstoque){
+        Produto produto = produtoDAO.buscarPorId(id);
+        produto.setEstoque(novoEstoque);
+        produtoDAO.alterar(produto);
+    }
+    
     public void inserirVenda(Cliente cliente, List listaProdutos){
         Venda venda = new Venda();
         venda.setCliente(cliente);
         venda.setListaProdutos(listaProdutos);
-        venda.setDataVenda(new Date());
+        venda.setDataVenda(new Date().toString());
         
         vendaDAO.inserir(venda);
+        
+        listaProdutos = abaterLista(listaProdutos);
+        updateListaProdutos(listaProdutos);
+        
     }
     
     public void inserirCliente(String nome, String telefone, String CEP, String endereco, String bairro, String complemento, Integer numero) throws ClassNotFoundException, SQLException{

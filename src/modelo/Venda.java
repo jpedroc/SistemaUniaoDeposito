@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,13 +31,13 @@ public class Venda  implements Serializable{
     private Long id;
     
     @Column(name = "datavenda")
-    private Date dataVenda;
+    private String dataVenda;
     
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "venda_produto",
         joinColumns = {@JoinColumn(name = "venda_id")},
@@ -51,11 +52,11 @@ public class Venda  implements Serializable{
         this.id = id;
     }
 
-    public Date getDataVenda() {
+    public String getDataVenda() {
         return dataVenda;
     }
 
-    public void setDataVenda(Date dataVenda) {
+    public void setDataVenda(String dataVenda) {
         this.dataVenda = dataVenda;
     }
 

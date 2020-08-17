@@ -5,21 +5,17 @@
  */
 package controlador;
 
-import java.awt.Component;
-import java.awt.Frame;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import view.CadastrarClienteDialog;
 import view.CadastrarProdutoDialog;
 import view.ListarClientes;
 import view.ListarProdutos;
+import view.ListarVendas;
 import view.RealizarVendaDialog;
 import view.UniaoDeposito;
 
@@ -36,6 +32,7 @@ public class InterfaceController {
     private ListarClientes dlgListarClientes;
     private ListarProdutos dlgListarProdutos;
     private RealizarVendaDialog dlgRealizarVenda;
+    private ListarVendas dlgListarVendas;
     
     
     public InterfaceController() throws ClassNotFoundException, SQLException {
@@ -46,6 +43,7 @@ public class InterfaceController {
         dlgListarClientes = null;
         dlgListarProdutos = null;
         dlgRealizarVenda = null;
+        dlgListarVendas = null;     
         
         try {
             gerDom = new DominioController();
@@ -98,6 +96,14 @@ public class InterfaceController {
             dlgListarProdutos = new ListarProdutos(telaPrincipal, true, this);
         }
         dlgListarProdutos.setVisible(true);
+    }
+    
+    public void janListarVenda() {
+        // ABRIR a janela de LISTAR DE Vendas                
+        if(dlgListarVendas == null){
+            dlgListarVendas = new ListarVendas(telaPrincipal, true, this);
+        }
+        dlgListarVendas.setVisible(true);
     }
     
     public void janRealizarVenda() {

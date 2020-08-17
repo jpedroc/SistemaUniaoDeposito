@@ -5,14 +5,15 @@
  */
 package view;
 
-import controlador.DominioController;
 import controlador.InterfaceController;
-import java.sql.SQLException;
+import java.awt.MouseInfo;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Produto;
@@ -23,6 +24,8 @@ import modelo.Produto;
  */
 public class ListarProdutos extends javax.swing.JDialog {
     InterfaceController controller;
+    private JPopupMenu popupMenu = new JPopupMenu();
+    private JMenuItem editarEstoque = null;
     
     /**
      * Creates new form ListarProdutos
@@ -31,6 +34,7 @@ public class ListarProdutos extends javax.swing.JDialog {
         super(parent, modal);
         this.controller = interfaceController;
         initComponents();
+        createPopupEditarEstoque();
         this.preencherProdutos(TableProdutos);
     }
     
@@ -41,7 +45,7 @@ public class ListarProdutos extends javax.swing.JDialog {
         listaProdutos = controller.getGerDominio().listar(Produto.class);
         
         for(Produto produto : listaProdutos){
-            modelo.addRow(new Object[]{produto.getNome(), produto.getMedida(), produto.getValor(), produto.getEstoque()});
+            modelo.addRow(new Object[]{produto.getId(), produto.getNome(), produto.getMedida(), produto.getValor(), produto.getEstoque()});
         }
     }
 
@@ -54,8 +58,13 @@ public class ListarProdutos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        OpEditarEstoque = new javax.swing.JMenuItem();
         jScrollPane2 = new javax.swing.JScrollPane();
         TableProdutos = new javax.swing.JTable();
+
+        OpEditarEstoque.setText("Editar Estoque");
+        jPopupMenu1.add(OpEditarEstoque);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listar Produtos");
@@ -66,14 +75,14 @@ public class ListarProdutos extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nome", "Peso/Litros", "Valor R$", "Estoque"
+                "ID", "Nome", "Peso/Litros", "Valor R$", "Estoque"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -82,6 +91,11 @@ public class ListarProdutos extends javax.swing.JDialog {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        TableProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableProdutosMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(TableProdutos);
@@ -100,6 +114,28 @@ public class ListarProdutos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TableProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProdutosMouseClicked
+        int posX = MouseInfo.getPointerInfo().getLocation().x;
+        int posY = MouseInfo.getPointerInfo().getLocation().y;
+        
+        popupMenu.show(this, posX, posY);
+    }//GEN-LAST:event_TableProdutosMouseClicked
+
+    private void createPopupEditarEstoque(){
+        editarEstoque = new JMenuItem("Editar Estoque");
+        
+        editarEstoque.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String novoEstoque = JOptionPane.showInputDialog("Valor do estoque:");
+                Long id = (Long) TableProdutos.getValueAt(TableProdutos.getSelectedRow(), 0);
+                controller.getGerDominio().alterarEstoqueProduto(id, Integer.parseInt(novoEstoque));
+            }
+        });
+        
+        popupMenu.add(editarEstoque);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -143,7 +179,9 @@ public class ListarProdutos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem OpEditarEstoque;
     private javax.swing.JTable TableProdutos;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

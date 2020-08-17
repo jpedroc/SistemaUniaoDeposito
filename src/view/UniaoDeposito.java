@@ -49,6 +49,7 @@ public class UniaoDeposito extends javax.swing.JFrame {
         ListarCliente = new javax.swing.JMenuItem();
         Venda = new javax.swing.JMenu();
         RealizarVenda = new javax.swing.JMenuItem();
+        ListarVendas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +103,14 @@ public class UniaoDeposito extends javax.swing.JFrame {
         });
         Venda.add(RealizarVenda);
 
+        ListarVendas.setText("Listar Vendas");
+        ListarVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ListarVendasActionPerformed(evt);
+            }
+        });
+        Venda.add(ListarVendas);
+
         jMenuBar1.add(Venda);
 
         setJMenuBar(jMenuBar1);
@@ -140,6 +149,10 @@ public class UniaoDeposito extends javax.swing.JFrame {
         interfaceController.janListarCliente();
     }//GEN-LAST:event_ListarClienteActionPerformed
 
+    private void ListarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListarVendasActionPerformed
+        interfaceController.janListarVenda();
+    }//GEN-LAST:event_ListarVendasActionPerformed
+
     public void resizeColumnWidth(JTable table) {
         final TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
@@ -161,6 +174,7 @@ public class UniaoDeposito extends javax.swing.JFrame {
     private javax.swing.JMenu Cliente;
     private javax.swing.JMenuItem ListarCliente;
     private javax.swing.JMenuItem ListarProduto;
+    private javax.swing.JMenuItem ListarVendas;
     private javax.swing.JMenu Produto;
     private javax.swing.JMenuItem RealizarVenda;
     private javax.swing.JMenu Venda;
